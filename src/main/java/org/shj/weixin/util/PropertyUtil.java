@@ -23,8 +23,33 @@ public class PropertyUtil {
 			
 		}catch(IOException ioe){
 			log.error("weixin.properties doesn't be found.");
+		}finally{
+			if( is != null){
+				try{
+					is.close();
+				}catch(IOException e){
+					log.error("There is error when closing weixin.properties file.");
+				}
+			}
 		}
 		
+	}
+	
+	public static int getIntProperty(String key){
+		String val = getStringProperty(key);
+		if(StringUtil.isEmpty(val)){
+			return 0;
+		}else{
+			return Integer.parseInt(val);
+		}
+	}
+	public static boolean getBooleanProperty(String key){
+		String val = getStringProperty(key);
+		if(StringUtil.isEmpty(val)){
+			return false;
+		}else{
+			return Boolean.getBoolean(val);
+		}
 	}
 	
 	public static String getStringProperty(String key){

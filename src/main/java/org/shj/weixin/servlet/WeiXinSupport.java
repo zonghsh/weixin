@@ -14,6 +14,16 @@ public class WeiXinSupport {
 	private static Logger log =  LoggerFactory.getLogger(WeiXinSupport.class);
 	
 	private String token;
+	
+	private String appID;
+	
+	private String appsecret;
+	
+	public WeiXinSupport(){
+		token = PropertyUtil.getToken();
+		appID = PropertyUtil.getAppId();
+		appsecret = PropertyUtil.getAppsecret();
+	}
 
 	/**
 	 * 加密/校验流程如下：
@@ -64,9 +74,16 @@ public class WeiXinSupport {
 	}
 	
 	public String getToken(){
-		if(token == null){
-			token = PropertyUtil.getStringProperty("Token");
-		}
 		return token;
 	}
+
+	public String getAppID() {
+		return appID;
+	}
+
+	public String getAppsecret() {
+		return appsecret;
+	}
+	
+	
 }

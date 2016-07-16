@@ -2,12 +2,14 @@ package org.shj.weixin.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WeiXinServlet extends HttpServlet {
 
@@ -16,7 +18,7 @@ public class WeiXinServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 7644907932703908226L;
 
-	private Logger log = Logger.getLogger(this.getClass().getName());
+	private Logger log = LoggerFactory.getLogger(WeiXinServlet.class);
 	
 	private WeiXinSupport support;
 

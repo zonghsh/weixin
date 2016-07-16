@@ -4,14 +4,20 @@
 
 <web-app>
 	<display-name>Weixin Web Application</display-name>
+	
+	<listener>
+		<listener-class>org.shj.weixin.listener.AccessTokenListener</listener-class>
+	</listener>
 
 	<servlet>
 		<servlet-name>weixin</servlet-name>
-		<servlet-class>org.shj.weixin.servlet.WeiXinCheckServlet</servlet-class>
+		<servlet-class>org.shj.weixin.servlet.WeiXinServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>weixin</servlet-name>
 		<url-pattern>/weixin</url-pattern>
 	</servlet-mapping>
+	
+	
 </web-app>
