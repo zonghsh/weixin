@@ -7,6 +7,17 @@ import org.shj.weixin.msg.BaseMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 对于菜单的handler，因为微信中菜单数量有限制，为了方便开发，对每一个菜单都创建了相应的handler类，具体规则：
+ * 一级菜单，因为最多有3个，所以创建了 M1Handler, M2Handler, M3Handler
+ * 二级菜单，命名为 M1S1Handler, M1S2Handler..., M2S1Handler, M2S2Handler
+ * 如果开发者只需要2个一级菜单，则只需要实现 M1Handler, M2Handler即可.
+ * 同理，对于二级菜单，也只需要实现其相应的Handler中的方法。
+ * 设置菜单的key值时，一级菜单为：M1， M2， M3; 二级菜单为：M1S1, M1S2....
+ *    
+ * @author Shen Huang Jian
+ *
+ */
 public abstract class Handler {
 	
 	private Logger log = LoggerFactory.getLogger(Handler.class);

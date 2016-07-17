@@ -1,8 +1,9 @@
-package org.shj.weixin.handler;
+package org.shj.weixin.handler.menu;
 
 import net.sf.json.JSONObject;
 
 import org.shj.weixin.enums.MsgType;
+import org.shj.weixin.handler.Handler;
 import org.shj.weixin.msg.TextMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
