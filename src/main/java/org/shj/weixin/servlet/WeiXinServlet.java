@@ -14,6 +14,7 @@ import net.sf.json.xml.XMLSerializer;
 
 import org.shj.weixin.handler.Handler;
 import org.shj.weixin.handler.HandlerFactory;
+import org.shj.weixin.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -129,7 +130,7 @@ public class WeiXinServlet extends HttpServlet {
 			Handler handler = HandlerFactory.factory.createHandler(jsonObject);
 			String msg = handler.handlerRequest(jsonObject);
 			
-			if(handler.needResponseMsg(jsonObject)){
+			if(!StringUtil.isEmpty(msg)){
 				log.info("responseStr:" + msg);
 				OutputStream os = response.getOutputStream();
 				os.write(msg.getBytes("UTF-8"));

@@ -13,6 +13,7 @@ public class M1S2Handler extends Handler{
 	public String handlerRequest(JSONObject jsonObj) {
 		log.info("处理菜单1中子菜单2.。。。。");
 		
+		//本测试帐号中，无消息返回
 		return null;
 	}
 }

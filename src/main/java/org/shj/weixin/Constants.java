@@ -8,5 +8,7 @@ public interface Constants {
 	
 	String GET_WEIXIN_IP = "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=ACCESS_TOKEN";
 	
+	String GET_USR_INFO = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
+	
 	
 }

@@ -15,6 +15,8 @@ public class M1S1Handler extends Handler{
 	public String handlerRequest(JSONObject jsonObj) {
 		log.info("处理菜单1中子菜单1.。。。。");
 		String fromUser = jsonObj.getString("FromUserName");
+		
+		//本测试帐号中，此菜单返回文本类型的消息
 		TextMsg text = new TextMsg();
 		
 		setCommonValuesInMsg(jsonObj, text);

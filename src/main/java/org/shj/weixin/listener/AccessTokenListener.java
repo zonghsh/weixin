@@ -47,7 +47,7 @@ public class AccessTokenListener implements ServletContextListener{
 		}, 1, 7000, TimeUnit.SECONDS);
 		
 		boolean menuInitialized = PropertyUtil.getBooleanProperty("menuInitialized");
-		if(!menuInitialized){
+		if(!menuInitialized){ //TODO: this value always be false
 			log.info("begin init menu...");
 			Menu menu = initMenu();
 			String jsonStr = JsonUtil.toJSONString(menu);

@@ -49,14 +49,10 @@ public abstract class Handler {
 	public void setCommonValuesInMsg(JSONObject jsonObj, BaseMsg msg){
 		String fromUser = jsonObj.getString("FromUserName");
 		String ToUserName = jsonObj.getString("ToUserName");
-		log.info("fromUser: " + fromUser );
-		log.info("ToUserName: " + ToUserName );
 		
 		msg.setFromUserName(ToUserName);
 		msg.setToUserName(fromUser);
 		msg.setCreateTime(System.currentTimeMillis() / 1000);
 	}
-	
-	
-	
+		
 }

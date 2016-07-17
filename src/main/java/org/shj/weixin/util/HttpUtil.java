@@ -57,6 +57,35 @@ public class HttpUtil {
 		return null;
 	}
 	
+	public static <T> T getToWeiXinServer(String url, Class<T> clazz){
+		String accessToken = AccessTokenHolder.instance.getAccessToken();
+		String newUrl = url.replace("ACCESS_TOKEN", accessToken);
+		log.info("Request URL: " + newUrl);
+		
+		CloseableHttpClient httpclient = null;
+		try{
+			httpclient = HttpClients.createDefault();
+			HttpGet get = new HttpGet(newUrl);
+			CloseableHttpResponse response = httpclient.execute(get);
+
+			return convertResponse(response, clazz);
+			
+		}catch(Exception e){
+        	log.error("There is error when get access_token.", e);
+        	
+        }finally{
+        	if(httpclient != null){
+        		try {
+					httpclient.close();
+				} catch (IOException e) {
+					//do nothing
+				}
+        	}
+        	
+        }
+		return null;
+	}
+	
 	public static <T> T postToWeiXinServer(String jsonStr, String url, Class<T> clazz){
 		String accessToken = AccessTokenHolder.instance.getAccessToken();
 		String newUrl = url.replace("ACCESS_TOKEN", accessToken);

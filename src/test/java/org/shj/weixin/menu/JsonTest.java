@@ -1,113 +1,27 @@
 package org.shj.weixin.menu;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sf.json.JSONObject;
+import net.sf.json.xml.XMLSerializer;
 
-import org.shj.weixin.enums.MenuType;
-
-import com.alibaba.fastjson.JSON;
 
 public class JsonTest {
 	
 	public static void main(String[] args){
-		Menu menu = initMenu();
-		String jsonStr = JSON.toJSONString(menu);
-		System.out.println(jsonStr);
+		String xml = "<xml><ToUserName><![CDATA[gh_c21dc119c81d]]></ToUserName>"
+				+"<FromUserName><![CDATA[ouLn5wa_Vb0gRjERYdApqUOweeDU]]></FromUserName>"
+				+"<CreateTime>1468755445</CreateTime>"
+				+"<MsgType><![CDATA[event]]></MsgType>"
+				+"<Event><![CDATA[scancode_push]]></Event>"
+				+"<EventKey><![CDATA[m1s3]]></EventKey>"
+				+"<ScanCodeInfo><ScanType><![CDATA[qrcode]]></ScanType>"
+				+"<ScanResult><![CDATA[http://cnbingapp.chinacloudsites.cn/qrcode?tag=BIASE]]></ScanResult>"
+				+"</ScanCodeInfo>"
+				+"</xml>";
+		
+		XMLSerializer xmlSerializer = new XMLSerializer();
+		JSONObject jsonObject = (JSONObject) xmlSerializer.read(xml);
+		System.out.println(jsonObject.get("ScanCodeInfo"));
 	}
 
-	private static Menu initMenu(){
-		Menu menu = new Menu();
-		List<MenuBtn> button = new ArrayList<MenuBtn>();
-		
-		//begin menu1
-		MenuBtn btn = new MenuBtn();
-		btn.setName("菜单一");
-		
-		MenuBtn sub = new MenuBtn();
-		List<MenuBtn> subBtns = new ArrayList<MenuBtn>();
-		
-		sub.setName("单击事件");
-		sub.setKey("m1s1");
-		sub.setType(MenuType.click);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("跳转URL");
-		sub.setKey("m1s2");
-		sub.setType(MenuType.view);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("扫码推事件");
-		sub.setKey("m1s3");
-		sub.setType(MenuType.scancode_push);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("扫码提示框");
-		sub.setKey("m1s4");
-		sub.setType(MenuType.scancode_waitmsg);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("拍照发图");
-		sub.setKey("m1s5");
-		sub.setType(MenuType.pic_sysphoto);
-		subBtns.add(sub);
-		
-		btn.setSubButton(subBtns);
-		button.add(btn);
-		//end menu1
-		
-		//begin menu2
-		btn = new MenuBtn();
-		btn.setName("菜单二");
-		
-		subBtns = new ArrayList<MenuBtn>();
-		
-		sub = new MenuBtn();
-		sub.setName("拍照或相册");
-		sub.setKey("m2s1");
-		sub.setType(MenuType.pic_photo_or_album);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("跳转URL");
-		sub.setKey("m2s2");
-		sub.setType(MenuType.pic_weixin);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("扫码推事件");
-		sub.setKey("m2s3");
-		sub.setType(MenuType.location_select);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("扫码提示框");
-		sub.setKey("m2s4");
-		sub.setType(MenuType.media_id);
-		subBtns.add(sub);
-		
-		sub = new MenuBtn();
-		sub.setName("拍照发图");
-		sub.setKey("m2s5");
-		sub.setType(MenuType.view_limited);
-		subBtns.add(sub);
-		
-		btn.setSubButton(subBtns);
-		button.add(btn);
-		//end menu2
-		
-		btn = new MenuBtn();
-		btn.setName("Hello");
-		sub.setKey("m3");
-		btn.setType(MenuType.click);
-		
-		button.add(btn);
-		
-		menu.setButton(button);
-		
-		return menu;
-	}
+	
 }
