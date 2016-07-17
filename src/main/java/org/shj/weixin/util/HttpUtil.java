@@ -1,4 +1,4 @@
-package org.shj.weixin.http;
+package org.shj.weixin.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.shj.weixin.Constants;
 import org.shj.weixin.entity.AccessToken;
 import org.shj.weixin.entity.AccessTokenHolder;
-import org.shj.weixin.util.PropertyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

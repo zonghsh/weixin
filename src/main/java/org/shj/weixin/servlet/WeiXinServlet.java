@@ -2,14 +2,21 @@ package org.shj.weixin.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+import net.sf.json.xml.XMLSerializer;
+
+import org.shj.weixin.handler.Handler;
+import org.shj.weixin.handler.HandlerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class WeiXinServlet extends HttpServlet {
 
@@ -112,30 +119,26 @@ public class WeiXinServlet extends HttpServlet {
 	 * 
 	 */
 	private void manageMessage(String requestStr, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String responseStr;
 		
 		log.info(requestStr);
 
-		/*try {
+		try {
 			XMLSerializer xmlSerializer = new XMLSerializer();
 			JSONObject jsonObject = (JSONObject) xmlSerializer.read(requestStr);
-			String event = jsonObject.getString("Event");
-			String msgtype = jsonObject.getString("MsgType");
-			if ("CLICK".equals(event) && "event".equals(msgtype)) { // 菜单click事件
-				String eventkey = jsonObject.getString("EventKey");
-				if ("hytd_001".equals(eventkey)) { // hytd_001 这是好友团队按钮的标志值
-					jsonObject.put("Content", "欢迎使用好友团队菜单click按钮.");
-				}
-
-			}
-			responseStr = creatRevertText(jsonObject);// 创建XML
-			log.info("responseStr:" + responseStr);
-			OutputStream os = response.getOutputStream();
-			os.write(responseStr.getBytes("UTF-8"));
+			
+			Handler handler = HandlerFactory.factory.createHandler(jsonObject);
+			String msg = handler.handlerRequest(jsonObject);
+			
+			if(handler.needResponseMsg(jsonObject)){
+				log.info("responseStr:" + msg);
+				OutputStream os = response.getOutputStream();
+				os.write(msg.getBytes("UTF-8"));
+				os.flush();
+			}			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 
 	}
 

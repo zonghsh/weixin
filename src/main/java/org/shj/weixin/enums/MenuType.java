@@ -1,4 +1,4 @@
-package org.shj.weixin.menu;
+package org.shj.weixin.enums;
 
 public enum MenuType {
 	

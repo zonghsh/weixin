@@ -13,11 +13,11 @@ import javax.servlet.ServletContextListener;
 
 import org.shj.weixin.Constants;
 import org.shj.weixin.entity.AccessTokenHolder;
-import org.shj.weixin.entity.ReturnCodeMsg;
-import org.shj.weixin.http.HttpUtil;
+import org.shj.weixin.entity.ResponseMsg;
+import org.shj.weixin.enums.MenuType;
 import org.shj.weixin.menu.Menu;
 import org.shj.weixin.menu.MenuBtn;
-import org.shj.weixin.menu.MenuType;
+import org.shj.weixin.util.HttpUtil;
 import org.shj.weixin.util.JsonUtil;
 import org.shj.weixin.util.PropertyUtil;
 import org.slf4j.Logger;
@@ -52,7 +52,7 @@ public class AccessTokenListener implements ServletContextListener{
 			Menu menu = initMenu();
 			String jsonStr = JsonUtil.toJSONString(menu);
 			//log.info(jsonStr);
-			HttpUtil.postToWeiXinServer(jsonStr, Constants.CREATE_MENU, ReturnCodeMsg.class);
+			HttpUtil.postToWeiXinServer(jsonStr, Constants.CREATE_MENU, ResponseMsg.class);
 		}
 	}
 

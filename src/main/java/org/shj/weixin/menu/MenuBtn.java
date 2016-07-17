@@ -2,6 +2,8 @@ package org.shj.weixin.menu;
 
 import java.util.List;
 
+import org.shj.weixin.enums.MenuType;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class MenuBtn {

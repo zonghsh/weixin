@@ -2,7 +2,7 @@ package org.shj.weixin.entity;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.shj.weixin.http.HttpUtil;
+import org.shj.weixin.util.HttpUtil;
 import org.shj.weixin.util.PropertyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

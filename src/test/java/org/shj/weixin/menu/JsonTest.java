@@ -3,6 +3,8 @@ package org.shj.weixin.menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.shj.weixin.enums.MenuType;
+
 import com.alibaba.fastjson.JSON;
 
 public class JsonTest {

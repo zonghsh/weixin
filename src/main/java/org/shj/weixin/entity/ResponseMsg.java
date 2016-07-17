@@ -1,8 +1,8 @@
 package org.shj.weixin.entity;
 
-public class ReturnCodeMsg {
+public class ResponseMsg {
 	
-	public ReturnCodeMsg(){}
+	public ResponseMsg(){}
 
 	private String errcode;
 	
