@@ -24,7 +24,7 @@ public class TextHandler extends Handler{
 		setCommonValuesInMsg(jsonObj, text);
 		text.setMsgType(RespMsgType.text.name());
 		text.setContent("你输入了：" + content);
-		
+				
 		return text.toXml();
 	}
 }

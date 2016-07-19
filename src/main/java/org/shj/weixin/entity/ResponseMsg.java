@@ -1,5 +1,11 @@
 package org.shj.weixin.entity;
 
+/**
+ * App Server调用微信服务器API时，微信服务器返回的消息
+ * 
+ * @author Shen Huang Jian
+ *
+ */
 public class ResponseMsg {
 	
 	public ResponseMsg(){}

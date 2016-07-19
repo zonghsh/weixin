@@ -21,7 +21,7 @@ public class HandlerFactory {
 
 	/**
 	 * 
-	 * @param eventKey 事件KEY值，与自定义菜单接口中KEY值对应
+	 * @param jsonObj 微信服务器推送过来的xml格式的字符串转成的JSON Object
 	 * @return
 	 */
 	public Handler createHandler(JSONObject jsonObj){
@@ -52,11 +52,16 @@ public class HandlerFactory {
 					break;
 				case pic_sysphoto :  
 				case pic_photo_or_album :  
-				case pic_weixin :  
+				case pic_weixin :
+					//以上三种菜单，都会发送图片给app server，此种情况微信服务器会发送两次消息推送给app server
+					//第一次是MsgType为event，handler为PicHandler ，
+					//第二次MsgType为image, handler为ImgHandler
+					//如果以上两个handler都返回消息给用户，则以ImgHandler为准，PicHandler将被忽略。测试几次情况均如此
 					handler = new PicHandler();
 					break;
 				case location_select :  
-					handler = new ClickHandler();
+					//这个handler应该和上面的PicHandler类似
+					handler = new MenuLocationHandler();
 					break;
 				case subscribe :  
 					handler = new SubscribeHandler();
@@ -65,8 +70,7 @@ public class HandlerFactory {
 					handler = new SubscribeHandler();
 					break;
 				default:  
-					handler = new ClickHandler();
-					break;
+					//不会出现此情况
 			}
 			
 			map.put(event, handler);

@@ -149,8 +149,15 @@ public class AccessTokenListener implements ServletContextListener{
 		
 		btn = new MenuBtn();
 		btn.setName("Hello");
-		btn.setKey("m3");
-		btn.setType(MenuType.click);
+		
+		subBtns = new ArrayList<MenuBtn>();
+		btn.setSubButton(subBtns);
+		
+		sub = new MenuBtn();
+		sub.setName("客服消息");
+		sub.setKey("m3s1");
+		sub.setType(MenuType.click);
+		subBtns.add(sub);
 		
 		button.add(btn);
 		

@@ -1,5 +1,11 @@
 package org.shj.weixin.msg;
 
+/**
+ * 此类为app server返回给微信服务器的消息的基类
+ * 
+ * @author Shen Huang Jian
+ *
+ */
 public abstract class BaseMsg {
 
 	/** 接收方帐号（收到的OpenID） */

@@ -21,6 +21,10 @@ public class ClickHandler extends Handler{
 		String fromUser = jsonObj.getString("FromUserName");
 		String key = jsonObj.getString("EventKey");
 		
+		if("m3s1".equals(key)){
+			return null;
+		}
+		
 		//本测试帐号中，此菜单返回文本类型的消息
 		TextMsg text = new TextMsg();
 		
