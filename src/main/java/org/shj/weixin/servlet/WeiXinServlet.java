@@ -18,6 +18,8 @@ import org.shj.weixin.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.qq.weixin.mp.aes.WXBizMsgCrypt;
+
 
 public class WeiXinServlet extends HttpServlet {
 
@@ -122,18 +124,21 @@ public class WeiXinServlet extends HttpServlet {
 	private void manageMessage(String requestStr, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		log.info(requestStr);
-
-		try {
+		
+		try{
+			requestStr = support.decryptRequest(requestStr, request);
 			XMLSerializer xmlSerializer = new XMLSerializer();
 			JSONObject jsonObject = (JSONObject) xmlSerializer.read(requestStr);
 			
 			Handler handler = HandlerFactory.factory.createHandler(jsonObject);
-			String msg = handler.handlerRequest(jsonObject);
+			String replyMsg = handler.handlerRequest(jsonObject);
 			
-			if(!StringUtil.isEmpty(msg)){
-				log.info("responseStr:" + msg);
+			if(!StringUtil.isEmpty(replyMsg)){
+				log.info("responseStr:" + replyMsg);
+				replyMsg = support.encryptMsg(replyMsg);
+				log.info("responseStr:" + replyMsg);
 				OutputStream os = response.getOutputStream();
-				os.write(msg.getBytes("UTF-8"));
+				os.write(replyMsg.getBytes("UTF-8"));
 				os.flush();
 			}			
 			

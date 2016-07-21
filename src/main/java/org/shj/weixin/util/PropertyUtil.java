@@ -67,4 +67,9 @@ public class PropertyUtil {
 	public static String getToken(){
 		return props.getProperty("Token");
 	}
+	
+	public static String getEncodingAESKey(){
+		return props.getProperty("EncodingAESKey");
+	}
+	
 }
