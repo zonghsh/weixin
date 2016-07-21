@@ -9,6 +9,12 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 
+/**
+ * 用户通过菜单按钮发送的位置信息，如果回复给用户信息，会被LocationHandler覆盖掉
+ * 
+ * @author Shen Huang Jian
+ *
+ */
 public class MenuLocationHandler extends Handler{
 
 	private Logger log = LoggerFactory.getLogger(MenuLocationHandler.class);

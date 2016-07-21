@@ -13,7 +13,7 @@ public class VoiceHandler extends Handler{
 	@Override
 	public String handlerRequest(JSONObject jsonObj) {
 		log.info("Handle voice msg.");
-		String format = jsonObj.getString("Format");
+//		String format = jsonObj.getString("Format");//声音文件格式
 		
 		//开通语音识别后，用户每次发送语音给公众号时，微信会在推送的语音消息XML数据包中，
 		//增加一个Recongnition字段（注：由于客户端缓存，开发者开启或者关闭语音识别功能，
@@ -23,7 +23,7 @@ public class VoiceHandler extends Handler{
 		TextMsg text = new TextMsg();
 		setCommonValuesInMsg(jsonObj, text);
 		text.setMsgType(RespMsgType.text.name());
-		text.setContent("声音文件格式：" + format + "\n 内容： " + recog);
+		text.setContent("你说的是不是： " + recog);
 		
 		return text.toXml();
 	}
