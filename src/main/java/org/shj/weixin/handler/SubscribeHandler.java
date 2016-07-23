@@ -2,7 +2,6 @@ package org.shj.weixin.handler;
 
 import net.sf.json.JSONObject;
 
-import org.shj.weixin.Constants;
 import org.shj.weixin.entity.UserInfo;
 import org.shj.weixin.enums.EventType;
 import org.shj.weixin.enums.RespMsgType;
@@ -22,9 +21,7 @@ public class SubscribeHandler extends Handler{
 		if(EventType.subscribe.name().equals(event)){
 			log.info("有新用户订阅");
 			
-			String url = Constants.GET_USR_INFO.replace("OPENID", jsonObj.getString("FromUserName"));
-			
-			UserInfo userInfo = HttpUtil.getToWeiXinServer(url, UserInfo.class);
+			UserInfo userInfo = HttpUtil.getUserInfoByOpenId(jsonObj.getString("FromUserName"));
 			TextMsg msg = new TextMsg();
 			
 			this.setCommonValuesInMsg(jsonObj, msg);

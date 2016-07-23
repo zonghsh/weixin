@@ -1,9 +1,13 @@
 package org.shj.weixin.handler;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import net.sf.json.JSONObject;
 
 import org.shj.weixin.enums.RespMsgType;
 import org.shj.weixin.msg.TextMsg;
+import org.shj.weixin.util.PropertyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +34,23 @@ public class ClickHandler extends Handler{
 		
 		setCommonValuesInMsg(jsonObj, text);
 		text.setMsgType(RespMsgType.text.name());
-		text.setContent(fromUser + "点击" + key);
+		
+		if("m3s2".equals(key)){
+			//引导用户的URL, 可以设置不同的state的值，在Controller那里可以根据这个值来导向不同的页面
+			String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+			
+			String redirecturl = PropertyUtil.getStringProperty("appUrlPrefix") + "reqeustAuth.do";
+			try {
+				text.setContent(url.replace("REDIRECT_URI", URLEncoder.encode(redirecturl, "UTF-8"))
+									.replace("APPID", PropertyUtil.getAppId()));
+			} catch (UnsupportedEncodingException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}else{
+			text.setContent(fromUser + "点击" + key);
+		}
 		
 		return text.toXml();
 	}

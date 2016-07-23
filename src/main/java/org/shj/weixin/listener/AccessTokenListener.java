@@ -38,13 +38,14 @@ public class AccessTokenListener implements ServletContextListener{
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		
+		//开启一个线程去定期更新access_token
 		service = Executors.newScheduledThreadPool(1);
 		log.info("Start refresh access_token task.");
 		service.scheduleAtFixedRate(new Runnable(){
 			public void run(){
 				AccessTokenHolder.instance.refreshToken();
 			}
-		}, 1, 7000, TimeUnit.SECONDS);
+		}, 1, 7150, TimeUnit.SECONDS);
 		
 		boolean menuInitialized = PropertyUtil.getBooleanProperty("menuInitialized");
 		if(!menuInitialized){ //TODO: this value always be false
@@ -156,6 +157,12 @@ public class AccessTokenListener implements ServletContextListener{
 		sub = new MenuBtn();
 		sub.setName("客服消息");
 		sub.setKey("m3s1");
+		sub.setType(MenuType.click);
+		subBtns.add(sub);
+		
+		sub = new MenuBtn();
+		sub.setName("生成回调URL");
+		sub.setKey("m3s2");
 		sub.setType(MenuType.click);
 		subBtns.add(sub);
 		
