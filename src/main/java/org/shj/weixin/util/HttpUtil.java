@@ -36,16 +36,16 @@ public class HttpUtil {
 			httpclient = HttpClients.createDefault();
 			
 			String getTokenUrl = Constants.GET_TOKEN.replace("APPID", PropertyUtil.getAppId())
-									   .replace("APPSECRET", PropertyUtil.getAppsecret());
+					   .replace("APPSECRET", PropertyUtil.getAppsecret());
 			
-			HttpGet httpGet = new HttpGet(getTokenUrl);
-			CloseableHttpResponse response = httpclient.execute(httpGet);
+			HttpGet get = new HttpGet(getTokenUrl);
+			CloseableHttpResponse response = httpclient.execute(get);
 			AccessToken token = convertResponse(response, AccessToken.class);
-			
 			return token.getAccessToken();
 			
 		}catch(Exception e){
         	log.error("There is error when get access_token.", e);
+        	
         }finally{
         	if(httpclient != null){
         		try {
@@ -55,6 +55,18 @@ public class HttpUtil {
 				}
         	}
         	
+        }
+		return null;
+	}
+	
+	public static String getJsapiTicket(){
+		try{
+			String getTokenUrl = Constants.GET_JSAPI_TICKET.replace("ACCESS_TOKEN", AccessTokenHolder.instance.getAccessToken());
+			JSONObject obj = getToWeiXinServer(getTokenUrl);
+			return obj.getString("ticket");
+			
+		}catch(Exception e){
+        	log.error("There is error when get access_token.", e);
         }
 		return null;
 	}
@@ -82,7 +94,7 @@ public class HttpUtil {
 			HttpGet get = new HttpGet(url);
 			CloseableHttpResponse response = httpclient.execute(get);
 
-			JsonUtil.getJSONFromString(getResponseInfo(response));
+			return JsonUtil.getJSONFromString(getResponseInfo(response));
 			
 		}catch(Exception e){
         	log.error("There is error when get access_token.", e);
@@ -97,7 +109,7 @@ public class HttpUtil {
         	}
         	
         }
-		return new JSONObject();
+		return null;
 	}
 	
 	/**

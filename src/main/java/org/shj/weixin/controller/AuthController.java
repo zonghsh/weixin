@@ -57,7 +57,7 @@ public class AuthController {
 			}
 		}
         
-        ModelAndView mav = new ModelAndView("auth", model);  
+        ModelAndView mav = new ModelAndView("demo/auth", model);  
         return mav;  
         
     }

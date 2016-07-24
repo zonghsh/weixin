@@ -20,7 +20,7 @@
 </head>
 <body>
 	<h2>Hello World!</h2>
-	<form action="login.do" method="post">  
+	<form action="reqeustAuth.do" method="post">  
     	username:<input type="text" name="username" />  
     	<p>  
     	password:<input type="password" name="password"/>  

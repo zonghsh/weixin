@@ -39,13 +39,21 @@ public class AccessTokenListener implements ServletContextListener{
 	public void contextInitialized(ServletContextEvent arg0) {
 		
 		//开启一个线程去定期更新access_token
-		service = Executors.newScheduledThreadPool(1);
-		log.info("Start refresh access_token task.");
+		service = Executors.newScheduledThreadPool(2);
+		
 		service.scheduleAtFixedRate(new Runnable(){
 			public void run(){
+				log.info("Start refresh access_token task.");
 				AccessTokenHolder.instance.refreshToken();
 			}
 		}, 1, 7150, TimeUnit.SECONDS);
+		
+		service.scheduleAtFixedRate(new Runnable(){
+			public void run(){
+				log.info("Start refresh jsapi_ticket task.");
+				AccessTokenHolder.instance.refreshJsapiTicket();
+			}
+		}, 3, 7150, TimeUnit.SECONDS);
 		
 		boolean menuInitialized = PropertyUtil.getBooleanProperty("menuInitialized");
 		if(!menuInitialized){ //TODO: this value always be false
@@ -148,6 +156,7 @@ public class AccessTokenListener implements ServletContextListener{
 		button.add(btn);
 		//end menu2
 		
+		//begin menu3
 		btn = new MenuBtn();
 		btn.setName("Hello");
 		
@@ -166,7 +175,22 @@ public class AccessTokenListener implements ServletContextListener{
 		sub.setType(MenuType.click);
 		subBtns.add(sub);
 		
+		sub = new MenuBtn();
+		sub.setName("WeUI");
+		sub.setKey("m3s3");
+		sub.setType(MenuType.view);
+		sub.setUrl(PropertyUtil.getStringProperty("appUrlPrefix") + "weui/jsp/weuiIndex.jsp");
+		subBtns.add(sub);
+		
+		sub = new MenuBtn();
+		sub.setName("JsSDK");
+		sub.setKey("m3s4");
+		sub.setType(MenuType.view);
+		sub.setUrl(PropertyUtil.getStringProperty("appUrlPrefix") + "jsp/demo/jssdkDemo.jsp");
+		subBtns.add(sub);
+		
 		button.add(btn);
+		//end menu3
 		
 		menu.setButton(button);
 		

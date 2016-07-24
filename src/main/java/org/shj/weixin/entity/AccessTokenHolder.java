@@ -13,11 +13,14 @@ public class AccessTokenHolder {
 	public static AccessTokenHolder instance = new AccessTokenHolder();
 	
 	private AtomicBoolean inited = new AtomicBoolean();
+	private AtomicBoolean initedJsapi = new AtomicBoolean();
 	
 	private AccessTokenHolder(){
 	}
 	
 	private String accessToken;
+	
+	private String jsapiTicket;
 	
 	public String getAccessToken(){
 		if(inited.get()){
@@ -27,6 +30,7 @@ public class AccessTokenHolder {
 		
 		while(!inited.get()){
 			try{
+				log.info("getAccessToken() thread sleep.");
 				Thread.sleep(100);
 			}catch(InterruptedException e){
 				//do nothing
@@ -34,6 +38,23 @@ public class AccessTokenHolder {
 		}
 		
 		return accessToken;
+	}
+	
+	public String getJsapiTicket(){
+		if(initedJsapi.get()){
+			return jsapiTicket;
+		}
+		
+		while(!initedJsapi.get()){
+			try{
+				log.info("getJsapiTicket() thread sleep.");
+				Thread.sleep(100);
+			}catch(InterruptedException e){
+				//do nothing
+			}
+		}
+		
+		return jsapiTicket;
 	}
 	
 	public void refreshToken(){
@@ -50,7 +71,28 @@ public class AccessTokenHolder {
 			log.error("Can't get access_token from server.");
 			throw new RuntimeException("微信服务器没有正确返回access_token.");
 		}
-		accessToken = val;
+		log.info("New Access_Token: " + val);
+		accessToken = val;		
 		inited.getAndSet(true);
+		
+	}
+	
+	public void refreshJsapiTicket(){
+		int tryTimes = PropertyUtil.getIntProperty("tryTimes");
+		String val = null;
+		
+		for(int i = 0 ; i < tryTimes; i++){
+			val = HttpUtil.getJsapiTicket();
+			if(val != null){
+				break;
+			}
+		}
+		if(val == null){
+			log.error("Can't get jsapi_ticket from server.");
+			throw new RuntimeException("微信服务器没有正确返回jsapi_ticket.");
+		}
+		log.info("New jsapiTicket: " + val);
+		jsapiTicket = val;		
+		initedJsapi.getAndSet(true);
 	}
 }
