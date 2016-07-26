@@ -4,14 +4,22 @@ import java.util.UUID;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Formatter;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.UnsupportedEncodingException;  
 
 import org.shj.weixin.util.StringUtil;
 
+import com.alibaba.fastjson.JSONObject;
+
 class Sign {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+    	
+    	String ticket = "gQEB8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL3FqcXlCNi1rS0g1UjR0NXdJQlI4AAIEs3WXVwMEEA4AAA==";
+    	System.out.println(URLEncoder.encode(ticket, "UTF-8"));
+    	
+
         String jsapi_ticket = "jsapi_ticket";
 
         // 注意 URL 一定要动态获取，不能 hardcode

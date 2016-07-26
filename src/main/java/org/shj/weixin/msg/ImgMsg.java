@@ -1,5 +1,7 @@
 package org.shj.weixin.msg;
 
+import org.shj.weixin.enums.RespMsgType;
+
 /**
  * <xml>
 	<ToUserName><![CDATA[toUser]]></ToUserName>
@@ -15,6 +17,10 @@ package org.shj.weixin.msg;
  *
  */
 public class ImgMsg extends BaseMsg{
+	
+	public ImgMsg(){
+		this.setMsgType(RespMsgType.image.name());
+	}
 	
 	/** 回复的图片的 mediaId，其值为图片上传到微信服务器后返回的值 */
 	private String mediaId;

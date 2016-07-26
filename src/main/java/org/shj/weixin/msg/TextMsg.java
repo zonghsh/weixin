@@ -1,5 +1,7 @@
 package org.shj.weixin.msg;
 
+import org.shj.weixin.enums.RespMsgType;
+
 /**
  * Sample Text message:
  *  <xml>
@@ -13,6 +15,10 @@ package org.shj.weixin.msg;
  *
  */
 public class TextMsg extends BaseMsg{
+	
+	public TextMsg(){
+		this.setMsgType(RespMsgType.text.name());
+	}
 	
 	/** 回复的消息内容 */
 	private String content;

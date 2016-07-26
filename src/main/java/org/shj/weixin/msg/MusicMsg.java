@@ -1,6 +1,12 @@
 package org.shj.weixin.msg;
 
+import org.shj.weixin.enums.RespMsgType;
+
 public class MusicMsg extends BaseMsg{
+	
+	public MusicMsg(){
+		this.setMsgType(RespMsgType.music.name());
+	}
 	
 	/** 回复的Music的 mediaId，其值为Music文件上传到微信服务器后返回的值 */
 	private String mediaId;

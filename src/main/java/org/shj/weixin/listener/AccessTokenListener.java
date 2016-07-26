@@ -186,7 +186,13 @@ public class AccessTokenListener implements ServletContextListener{
 		sub.setName("JsSDK");
 		sub.setKey("m3s4");
 		sub.setType(MenuType.view);
-		sub.setUrl(PropertyUtil.getStringProperty("appUrlPrefix") + "jsp/demo/jssdkDemo.jsp");
+		sub.setUrl(PropertyUtil.getStringProperty("appUrlPrefix") + "jssdkDemo.do");
+		subBtns.add(sub);
+		
+		sub = new MenuBtn();
+		sub.setName("生成二维码");
+		sub.setKey("m3s5");
+		sub.setType(MenuType.click);
 		subBtns.add(sub);
 		
 		button.add(btn);

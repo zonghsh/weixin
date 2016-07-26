@@ -146,23 +146,7 @@ public class WeiXinServlet extends HttpServlet {
 
 	}
 
-	/*private String creatRevertText(JSONObject jsonObject) {
-		StringBuffer revert = new StringBuffer();
-		revert.append("<xml>");
-		revert.append("<ToUserName><![CDATA[" + jsonObject.get("ToUserName")
-				+ "]]></ToUserName>");
-		revert.append("<FromUserName><![CDATA["
-				+ jsonObject.get("FromUserName") + "]]></FromUserName>");
-		revert.append("<CreateTime>" + jsonObject.get("CreateTime")
-				+ "</CreateTime>");
-		revert.append("<MsgType><![CDATA[text]]></MsgType>");
-		revert.append("<Content><![CDATA[" + jsonObject.get("Content")
-				+ "]]></Content>");
-		revert.append("<FuncFlag>0</FuncFlag>");
-		revert.append("</xml>");
-		return revert.toString();
-	}*/
-
+	
 	@Override
 	public void init() throws ServletException {
 		support =  new WeiXinSupport();

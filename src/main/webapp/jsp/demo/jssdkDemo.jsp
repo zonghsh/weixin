@@ -217,7 +217,7 @@
 	        alert('用户点击分享到朋友圈');
 	      }, */
 	      success: function (res) {
-	        alert('已分享');
+	        alert('已分享到朋友圈');
 	      },
 	      cancel: function (res) {
 	        alert('已取消分享到朋友圈');
@@ -252,7 +252,7 @@
 	        alert(JSON.stringify(res));
 	      }
 	    });
-	    alert('已注册获取“分享到 QQ”状态事件');
+	    //alert('已注册获取“分享到 QQ”状态事件');
 	  };
 	  
 	  // 2.4 监听“分享到微博”按钮点击、自定义分享内容及分享结果接口

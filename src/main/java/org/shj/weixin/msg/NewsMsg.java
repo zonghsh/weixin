@@ -2,7 +2,13 @@ package org.shj.weixin.msg;
 
 import java.util.List;
 
+import org.shj.weixin.enums.RespMsgType;
+
 public class NewsMsg extends BaseMsg{
+	
+	public NewsMsg(){
+		this.setMsgType(RespMsgType.news.name());
+	}
 		
 	private int articleCount;
 	

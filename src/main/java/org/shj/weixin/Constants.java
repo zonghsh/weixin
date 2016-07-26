@@ -20,4 +20,16 @@ public interface Constants {
 	String REFRESH_TOKEN = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&grant_type=refresh_token&refresh_token=REFRESH_TOKEN";
 	
 	String GET_TEMP_USER_INFO = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
+	
+	//获取二维码ticket
+	String POST_2D_CODE_TICKET = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=ACCESS_TOKEN";
+	
+	//用ticket换取二维码，对TICKET进行URLEncode
+	String GET_2D_CODE = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=TICKET";
+	
+	//新增临时素材
+	String POST_FILE = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
+	
+	//客服回复消息
+	String POST_RESPONSE_MSG = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN";
 }

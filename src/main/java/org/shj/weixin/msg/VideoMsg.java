@@ -1,6 +1,12 @@
 package org.shj.weixin.msg;
 
+import org.shj.weixin.enums.RespMsgType;
+
 public class VideoMsg extends BaseMsg{
+	
+	public VideoMsg(){
+		this.setMsgType(RespMsgType.video.name());
+	}
 	
 	/** 回复的video的 mediaId，其值为video文件上传到微信服务器后返回的值 */
 	private String mediaId;
