@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
 
 import net.sf.json.JSONObject;
@@ -86,15 +87,25 @@ public class ClickHandler extends Handler{
 				CloseableHttpResponse response = httpclient.execute(get);
 				InputStream is = response.getEntity().getContent();
 				log.info("1111111111111");
-				File f = new File("F:\\download\\2d.jpg");
-				FileOutputStream os = new FileOutputStream(f);
-				byte[] b = new byte[1024];
-				int read = 0;
-				while((read = is.read(b)) != -1){
-					os.write(b, 0, read);
+				
+				URL url = Thread.currentThread().getContextClassLoader().getResource("/");
+				log.info(url.getPath());
+				log.info(url.toURI().getPath());
+				
+				String filePath = url.getPath() + "temp" + File.separator + "2d.jpg";
+				log.info("temp filePath: " + filePath);
+				
+				File f = new File(filePath);
+				if(!f.exists()){
+					FileOutputStream os = new FileOutputStream(f);
+					byte[] b = new byte[1024];
+					int read = 0;
+					while((read = is.read(b)) != -1){
+						os.write(b, 0, read);
+					}
+					os.flush();
+					os.close();
 				}
-				os.flush();
-				os.close();
 				String mediaId = HttpUtil.postFileToWeiXinServer("image", f);
 				log.info("mediaId: " + mediaId);
 				String data = "{\"touser\":\"%s\",\"msgtype\":\"image\",\"image\":{\"media_id\":\"%s\" }}";

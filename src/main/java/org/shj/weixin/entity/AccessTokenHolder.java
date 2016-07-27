@@ -95,4 +95,9 @@ public class AccessTokenHolder {
 		jsapiTicket = val;		
 		initedJsapi.getAndSet(true);
 	}
+	
+	public void setAccessToken(String access){
+		this.accessToken = access;
+		inited.getAndSet(true);
+	}
 }

@@ -1,8 +1,18 @@
 package org.shj.weixin.util;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -137,30 +147,88 @@ public class HttpUtil {
 	 * @return media_id
 	 */
 	public static String postFileToWeiXinServer(String fileType, File file){
-		String newUrl = Constants.POST_FILE.replace("ACCESS_TOKEN", AccessTokenHolder.instance.getAccessToken())
-								.replace("TYPE", fileType);
-		
-		log.info("Request URL: " + newUrl);
-		
-		CloseableHttpClient httpclient = null;
-		try{
-			httpclient = HttpClients.createDefault();
-			CloseableHttpResponse response = null;
-			
-			HttpPost post = new HttpPost(newUrl);
-			FileEntity fileEntity = new FileEntity(file);
-			post.setEntity(fileEntity);
-			response = httpclient.execute(post);
-			
-			String responsStr = getResponseInfo(response);//{"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
-			
-			return JsonUtil.getJSONFromString(responsStr).getString("media_id");
-			
+		String urlStr = Constants.POST_FILE.replace("ACCESS_TOKEN", AccessTokenHolder.instance.getAccessToken())
+				.replace("TYPE", fileType);
+		String res = "";
+		HttpURLConnection conn = null;
+		String BOUNDARY = "---------------------------"	+ System.currentTimeMillis(); // boundary就是request头和上传文件内容的分隔符
+		try {
 
-		}catch(Exception e){
-        	log.error("There is error when get access_token.", e);
+			URL url = new URL(urlStr);
+
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(20000);
+			conn.setReadTimeout(30000);
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setUseCaches(false);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Connection", "Keep-Alive");
+			conn.setRequestProperty(
+					"User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
+			conn.setRequestProperty("Content-Type",	"multipart/form-data; boundary=" + BOUNDARY);
+
+			OutputStream out = new DataOutputStream(conn.getOutputStream());
+
+			// file
+			String filename = file.getName();
+			String contentType = new MimetypesFileTypeMap()
+					.getContentType(file);
+			if (filename.endsWith(".png")) {
+				contentType = "image/png";
+			} else if (filename.endsWith(".jpg")) {
+				contentType = "image/jpeg";
+			} else if (filename.endsWith(".mp4")) {
+				contentType = "video/mpeg4";
+			}
+			if (contentType == null || contentType.equals("")) {
+				contentType = "application/octet-stream";
+			}
+
+			StringBuffer strBuf = new StringBuffer();
+			strBuf.append("\r\n").append("--").append(BOUNDARY).append("\r\n");
+			strBuf.append("Content-Disposition: form-data; name=\"file\"; filename=\""
+					+ filename + "\"\r\n");
+			strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
+
+			out.write(strBuf.toString().getBytes("utf-8"));
+
+			DataInputStream in = new DataInputStream(new FileInputStream(file));
+			int bytes = 0;
+			byte[] bufferOut = new byte[1024];
+			while ((bytes = in.read(bufferOut)) != -1) {
+				out.write(bufferOut, 0, bytes);
+			}
+			in.close();
+
+			byte[] endData = ("\r\n--" + BOUNDARY + "--\r\n").getBytes("utf-8");
+			out.write(endData);
+			out.flush();
+			out.close();
+
+			// 读取返回数据
+			strBuf = new StringBuffer();
+
+			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				strBuf.append(line).append("\n");
+			}
+			res = strBuf.toString();
+			reader.close();
+			reader = null;
+		} catch (Exception e) {
+			System.out.println("发送POST请求出错。" + urlStr);
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				conn.disconnect();
+				conn = null;
+			}
 		}
-		return null;
+		log.info("Response: " + res);
+		return JsonUtil.getJSONFromString(res).getString("media_id");
 	}
 	
 	/**
